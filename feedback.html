@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Feedback - Trash Recycling Management System">
+    <title>Feedback - Trash Recycling Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --success-color: #2ecc71;
+            --error-color: #e74c3c;
+            --warning-color: #f1c40f;
+            --text-color: #2c3e50;
+            --light-gray: #ecf0f1;
+            --border-color: #bdc3c7;
+            --shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f6fa 0%, #e8eaf6 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feedback-header {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .feedback-header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .feedback-header p {
+            margin: 1rem 0 0;
+            color: var(--secondary-color);
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+
+        .feedback-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 992px) {
+            .feedback-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .feedback-form {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .feedback-type {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feedback-type-option {
+            position: relative;
+        }
+
+        .feedback-type-option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .feedback-type-option label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem;
+            background: var(--light-gray);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .feedback-type-option input:checked + label {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .feedback-type-option i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .feedback-info {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+        }
+
+        .info-section {
+            margin-bottom: 2rem;
+        }
+
+        .info-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-section h3 {
+            margin: 0 0 1rem;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-section p {
+            margin: 0;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .info-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .info-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        .info-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-list i {
+            color: var(--accent-color);
+        }
+
+        .rating {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--border-color);
+            transition: var(--transition);
+        }
+
+        .rating input:checked ~ label {
+            color: var(--warning-color);
+        }
+
+        .rating label:hover,
+        .rating label:hover ~ label {
+            color: var(--warning-color);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .feedback-header h1 {
+                font-size: 2rem;
+            }
+
+            .feedback-type {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback-header,
+        .feedback-form,
+        .feedback-info {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-recycle"></i>
+                TrashRecycle
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="my-waste.html"><i class="fas fa-trash"></i> My Waste</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pickup-request.html"><i class="fas fa-truck"></i> Pickup Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="rewards.html"><i class="fas fa-gift"></i> Rewards</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <button class="btn btn-link text-light dropdown-toggle" type="button" id="notificationsDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge bg-danger">3</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><h6 class="dropdown-header">Notifications</h6></li>
+                            <li><a class="dropdown-item" href="#">New pickup request accepted</a></li>
+                            <li><a class="dropdown-item" href="#">Reward points updated</a></li>
+                            <li><a class="dropdown-item" href="#">New recycling tip available</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown ms-3">
+                        <button class="btn btn-link text-light dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                            <img src="https://via.placeholder.com/32" class="rounded-circle me-2" alt="Profile">
+                            <span>John Doe</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                            <li><a class="dropdown-item" href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="feedback-header">
+            <h1>Feedback</h1>
+            <p>Help us improve by sharing your thoughts and suggestions</p>
+        </div>
+
+        <div class="feedback-grid">
+            <div class="feedback-form">
+                <form id="feedbackForm">
+                    <div class="feedback-type">
+                        <div class="feedback-type-option">
+                            <input type="radio" name="feedbackType" id="suggestion" value="suggestion" checked>
+                            <label for="suggestion">
+                                <i class="fas fa-lightbulb"></i>
+                                Suggestion
+                            </label>
+                        </div>
+                        <div class="feedback-type-option">
+                            <input type="radio" name="feedbackType" id="bug" value="bug">
+                            <label for="bug">
+                                <i class="fas fa-bug"></i>
+                                Bug Report
+                            </label>
+                        </div>
+                        <div class="feedback-type-option">
+                            <input type="radio" name="feedbackType" id="feature" value="feature">
+                            <label for="feature">
+                                <i class="fas fa-star"></i>
+                                Feature Request
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" class="form-control" placeholder="Brief description of your feedback" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" class="form-control" placeholder="Please provide detailed information about your feedback" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>How would you rate your experience?</label>
+                        <div class="rating">
+                            <input type="radio" name="rating" id="star5" value="5">
+                            <label for="star5"><i class="fas fa-star"></i></label>
+                            <input type="radio" name="rating" id="star4" value="4">
+                            <label for="star4"><i class="fas fa-star"></i></label>
+                            <input type="radio" name="rating" id="star3" value="3">
+                            <label for="star3"><i class="fas fa-star"></i></label>
+                            <input type="radio" name="rating" id="star2" value="2">
+                            <label for="star2"><i class="fas fa-star"></i></label>
+                            <input type="radio" name="rating" id="star1" value="1">
+                            <label for="star1"><i class="fas fa-star"></i></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email (optional)</label>
+                        <input type="email" id="email" class="form-control" placeholder="We'll only use this to follow up on your feedback">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                </form>
+            </div>
+
+            <div class="feedback-info">
+                <div class="info-section">
+                    <h3><i class="fas fa-info-circle"></i> About Feedback</h3>
+                    <p>Your feedback helps us improve our recycling management system and provide better service to our users. We value your input and use it to make informed decisions about future updates and improvements.</p>
+                </div>
+
+                <div class="info-section">
+                    <h3><i class="fas fa-check-circle"></i> What to Include</h3>
+                    <ul class="info-list">
+                        <li><i class="fas fa-angle-right"></i> Clear description of your feedback</li>
+                        <li><i class="fas fa-angle-right"></i> Steps to reproduce (for bugs)</li>
+                        <li><i class="fas fa-angle-right"></i> Expected vs actual behavior</li>
+                        <li><i class="fas fa-angle-right"></i> Screenshots if applicable</li>
+                    </ul>
+                </div>
+
+                <div class="info-section">
+                    <h3><i class="fas fa-clock"></i> Response Time</h3>
+                    <p>We typically respond to feedback within 2-3 business days. For urgent issues, please contact our support team directly.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Handle form submission
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const feedbackData = Object.fromEntries(formData.entries());
+            
+            // Here you would typically send the data to your backend
+            console.log('Feedback submitted:', feedbackData);
+            
+            // Show success message
+            alert('Thank you for your feedback! We appreciate your input.');
+            
+            // Reset form
+            this.reset();
+        });
+
+        // Handle feedback type selection
+        document.querySelectorAll('.feedback-type-option input').forEach(input => {
+            input.addEventListener('change', function() {
+                // Update form fields based on feedback type
+                const description = document.getElementById('description');
+                switch(this.value) {
+                    case 'bug':
+                        description.placeholder = 'Please describe the issue, steps to reproduce, and expected behavior';
+                        break;
+                    case 'feature':
+                        description.placeholder = 'Please describe the feature you\'d like to see and how it would benefit users';
+                        break;
+                    default:
+                        description.placeholder = 'Please provide detailed information about your feedback';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

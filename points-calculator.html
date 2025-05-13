@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Points Calculator - Trash Recycling Management System">
+    <title>Points Calculator - Trash Recycling Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/dashboard.css" rel="stylesheet">
+    <link href="css/points-calculator.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-recycle"></i>
+                TrashRecycle
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-trash"></i> My Waste</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-truck"></i> Pickup Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="fas fa-gift"></i> Rewards</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <button class="btn btn-link text-light dropdown-toggle" type="button" id="notificationsDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge bg-danger">3</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><h6 class="dropdown-header">Notifications</h6></li>
+                            <li><a class="dropdown-item" href="#">New pickup request accepted</a></li>
+                            <li><a class="dropdown-item" href="#">Reward points updated</a></li>
+                            <li><a class="dropdown-item" href="#">New recycling tip available</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown ms-3">
+                        <button class="btn btn-link text-light dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                            <img src="https://via.placeholder.com/32" class="rounded-circle me-2" alt="Profile">
+                            <span>John Doe</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-user"></i> Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="dashboard.html">
+                                <i class="fas fa-chart-line"></i>
+                                Overview
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-history"></i>
+                                History
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Locations
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                <i class="fas fa-star"></i>
+                                Rewards
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-cog"></i>
+                                Settings
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content Area -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Points Calculator</h1>
+                </div>
+
+                <!-- Calculator Section -->
+                <div class="row">
+                    <!-- Calculator Form -->
+                    <div class="col-md-8">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5 class="mb-0">Calculate Your Points</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="pointsCalculatorForm">
+                                    <!-- Material Type -->
+                                    <div class="mb-4">
+                                        <label class="form-label">Select Material Type</label>
+                                        <div class="row g-3">
+                                            <div class="col-md-4">
+                                                <div class="material-option">
+                                                    <input type="radio" class="btn-check" name="materialType" id="plastic" value="plastic" checked>
+                                                    <label class="btn btn-outline-primary w-100" for="plastic">
+                                                        <i class="fas fa-bottle-water"></i>
+                                                        Plastic
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="material-option">
+                                                    <input type="radio" class="btn-check" name="materialType" id="paper" value="paper">
+                                                    <label class="btn btn-outline-primary w-100" for="paper">
+                                                        <i class="fas fa-newspaper"></i>
+                                                        Paper
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="material-option">
+                                                    <input type="radio" class="btn-check" name="materialType" id="glass" value="glass">
+                                                    <label class="btn btn-outline-primary w-100" for="glass">
+                                                        <i class="fas fa-wine-glass"></i>
+                                                        Glass
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="material-option">
+                                                    <input type="radio" class="btn-check" name="materialType" id="metal" value="metal">
+                                                    <label class="btn btn-outline-primary w-100" for="metal">
+                                                        <i class="fas fa-cube"></i>
+                                                        Metal
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="material-option">
+                                                    <input type="radio" class="btn-check" name="materialType" id="electronic" value="electronic">
+                                                    <label class="btn btn-outline-primary w-100" for="electronic">
+                                                        <i class="fas fa-laptop"></i>
+                                                        Electronic
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="material-option">
+                                                    <input type="radio" class="btn-check" name="materialType" id="other" value="other">
+                                                    <label class="btn btn-outline-primary w-100" for="other">
+                                                        <i class="fas fa-ellipsis-h"></i>
+                                                        Other
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Quantity and Weight -->
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <label for="quantity" class="form-label">Number of Items/Bags</label>
+                                            <input type="number" class="form-control" id="quantity" min="1" value="1">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="weight" class="form-label">Weight (kg)</label>
+                                            <input type="number" class="form-control" id="weight" min="0.1" step="0.1" value="1.0">
+                                        </div>
+                                    </div>
+
+                                    <!-- Calculate Button -->
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-calculator me-2"></i>Calculate Points
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results Section -->
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5 class="mb-0">Estimated Points</h5>
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="points-result">
+                                    <div class="points-value" id="calculatedPoints">0</div>
+                                    <p class="points-label">Points</p>
+                                </div>
+                                <div class="points-breakdown mt-4">
+                                    <h6>Points Breakdown</h6>
+                                    <ul class="list-unstyled">
+                                        <li class="d-flex justify-content-between mb-2">
+                                            <span>Base Points:</span>
+                                            <span id="basePoints">0</span>
+                                        </li>
+                                        <li class="d-flex justify-content-between mb-2">
+                                            <span>Weight Bonus:</span>
+                                            <span id="weightBonus">0</span>
+                                        </li>
+                                        <li class="d-flex justify-content-between mb-2">
+                                            <span>Quantity Bonus:</span>
+                                            <span id="quantityBonus">0</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tips Section -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">Tips to Earn More Points</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="tips-list">
+                                    <li>
+                                        <i class="fas fa-lightbulb text-warning"></i>
+                                        Sort your recyclables properly for bonus points
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-lightbulb text-warning"></i>
+                                        Recycle larger quantities to earn quantity bonuses
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-lightbulb text-warning"></i>
+                                        Clean and prepare materials for maximum points
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-lightbulb text-warning"></i>
+                                        Check for special recycling events with bonus points
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/points-calculator.js"></script>
+</body>
+</html>

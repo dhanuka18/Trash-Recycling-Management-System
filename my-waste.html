@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="My Waste - Trash Recycling Management System">
+    <title>My Waste - Trash Recycling Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --success-color: #2ecc71;
+            --error-color: #e74c3c;
+            --warning-color: #f1c40f;
+            --text-color: #2c3e50;
+            --light-gray: #ecf0f1;
+            --border-color: #bdc3c7;
+            --shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f6fa 0%, #e8eaf6 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .waste-header {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .waste-header h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .waste-header p {
+            margin: 0.5rem 0 0;
+            color: var(--secondary-color);
+            opacity: 0.8;
+        }
+
+        .waste-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 992px) {
+            .waste-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .waste-section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .waste-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .waste-card {
+            background: var(--light-gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .waste-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .waste-type {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .waste-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+
+        .waste-info h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .waste-info p {
+            margin: 0.25rem 0 0;
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+
+        .waste-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--light-gray);
+            color: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+            transform: translateY(-2px);
+        }
+
+        .tips-section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+        }
+
+        .tip-card {
+            background: var(--light-gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tip-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .tip-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .tip-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--success-color);
+            font-size: 1.2rem;
+        }
+
+        .tip-content h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .tip-content p {
+            margin: 0.5rem 0 0;
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+
+        .progress-section {
+            margin-top: 1rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--light-gray);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent-color);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .waste-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .waste-header,
+        .waste-section,
+        .tips-section {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-recycle"></i>
+                TrashRecycle
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="fas fa-trash"></i> My Waste</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pickup-request.html"><i class="fas fa-truck"></i> Pickup Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="rewards.html"><i class="fas fa-gift"></i> Rewards</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <button class="btn btn-link text-light dropdown-toggle" type="button" id="notificationsDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge bg-danger">3</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><h6 class="dropdown-header">Notifications</h6></li>
+                            <li><a class="dropdown-item" href="#">New pickup request accepted</a></li>
+                            <li><a class="dropdown-item" href="#">Reward points updated</a></li>
+                            <li><a class="dropdown-item" href="#">New recycling tip available</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown ms-3">
+                        <button class="btn btn-link text-light dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                            <img src="https://via.placeholder.com/32" class="rounded-circle me-2" alt="Profile">
+                            <span>John Doe</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                            <li><a class="dropdown-item" href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="waste-header">
+            <h1>My Waste</h1>
+            <p>Manage your waste collection and recycling activities</p>
+        </div>
+
+        <div class="waste-grid">
+            <div class="waste-section">
+                <div class="section-header">
+                    <h2>Current Waste Items</h2>
+                    <a href="pickup-request.html" class="btn btn-primary">Schedule Pickup</a>
+                </div>
+                <div class="waste-list">
+                    <div class="waste-card">
+                        <div class="waste-type">
+                            <div class="waste-icon">
+                                <i class="fas fa-recycle"></i>
+                            </div>
+                            <div class="waste-info">
+                                <h3>Recyclables</h3>
+                                <p>Paper, Plastic, Glass</p>
+                            </div>
+                        </div>
+                        <div class="progress-section">
+                            <div class="progress-label">
+                                <span>Current Weight</span>
+                                <span>5.2 kg</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%"></div>
+                            </div>
+                        </div>
+                        <div class="waste-actions">
+                            <a href="#" class="btn btn-secondary">View Details</a>
+                            <a href="pickup-request.html" class="btn btn-primary">Schedule Pickup</a>
+                        </div>
+                    </div>
+
+                    <div class="waste-card">
+                        <div class="waste-type">
+                            <div class="waste-icon">
+                                <i class="fas fa-laptop"></i>
+                            </div>
+                            <div class="waste-info">
+                                <h3>E-Waste</h3>
+                                <p>Electronics, Batteries</p>
+                            </div>
+                        </div>
+                        <div class="progress-section">
+                            <div class="progress-label">
+                                <span>Current Weight</span>
+                                <span>3.8 kg</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 45%"></div>
+                            </div>
+                        </div>
+                        <div class="waste-actions">
+                            <a href="#" class="btn btn-secondary">View Details</a>
+                            <a href="pickup-request.html" class="btn btn-primary">Schedule Pickup</a>
+                        </div>
+                    </div>
+
+                    <div class="waste-card">
+                        <div class="waste-type">
+                            <div class="waste-icon">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <div class="waste-info">
+                                <h3>Organic Waste</h3>
+                                <p>Food Scraps, Garden Waste</p>
+                            </div>
+                        </div>
+                        <div class="progress-section">
+                            <div class="progress-label">
+                                <span>Current Weight</span>
+                                <span>4.5 kg</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="waste-actions">
+                            <a href="#" class="btn btn-secondary">View Details</a>
+                            <a href="pickup-request.html" class="btn btn-primary">Schedule Pickup</a>
+                        </div>
+                    </div>
+
+                    <div class="waste-card">
+                        <div class="waste-type">
+                            <div class="waste-icon">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div class="waste-info">
+                                <h3>Bulk Items</h3>
+                                <p>Furniture, Appliances</p>
+                            </div>
+                        </div>
+                        <div class="progress-section">
+                            <div class="progress-label">
+                                <span>Current Weight</span>
+                                <span>15.0 kg</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="waste-actions">
+                            <a href="#" class="btn btn-secondary">View Details</a>
+                            <a href="pickup-request.html" class="btn btn-primary">Schedule Pickup</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-section">
+                <div class="section-header">
+                    <h2>Recycling Tips</h2>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-header">
+                        <div class="tip-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="tip-content">
+                            <h3>Sort Your Waste</h3>
+                            <p>Separate recyclables, organic waste, and e-waste for better recycling efficiency.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-header">
+                        <div class="tip-icon">
+                            <i class="fas fa-bottle-water"></i>
+                        </div>
+                        <div class="tip-content">
+                            <h3>Clean Before Recycling</h3>
+                            <p>Rinse containers and remove labels to ensure proper recycling.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-header">
+                        <div class="tip-icon">
+                            <i class="fas fa-battery-full"></i>
+                        </div>
+                        <div class="tip-content">
+                            <h3>Battery Safety</h3>
+                            <p>Store used batteries separately and never mix with other waste.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Handle waste card interactions
+        document.querySelectorAll('.waste-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (!e.target.closest('.btn')) {
+                    // Navigate to waste details page
+                    console.log('Viewing waste details:', this.querySelector('h3').textContent);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

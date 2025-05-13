@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rewards - Trash Recycling Management System">
+    <title>Rewards - Trash Recycling Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --success-color: #2ecc71;
+            --error-color: #e74c3c;
+            --warning-color: #f1c40f;
+            --text-color: #2c3e50;
+            --light-gray: #ecf0f1;
+            --border-color: #bdc3c7;
+            --shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f6fa 0%, #e8eaf6 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .rewards-header {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .rewards-header h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .rewards-header p {
+            margin: 0.5rem 0 0;
+            color: var(--secondary-color);
+            opacity: 0.8;
+        }
+
+        .points-summary {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .points-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin: 1rem 0;
+        }
+
+        .points-label {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .points-progress {
+            height: 8px;
+            background: var(--light-gray);
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .points-progress-bar {
+            height: 100%;
+            background: var(--accent-color);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .next-level {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+
+        .rewards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .reward-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .reward-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .reward-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .reward-content {
+            padding: 1.5rem;
+        }
+
+        .reward-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .reward-description {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .reward-points {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-color);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .reward-points i {
+            font-size: 1.2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--light-gray);
+            color: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .history-section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .history-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: var(--accent-color);
+        }
+
+        .history-content {
+            flex: 1;
+        }
+
+        .history-content h4 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .history-content p {
+            margin: 0.25rem 0 0;
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+
+        .history-points {
+            font-weight: 500;
+            color: var(--accent-color);
+        }
+
+        .history-date {
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+            opacity: 0.8;
+        }
+
+        /* Toast Notification */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .toast {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .toast i {
+            margin-right: 0.5rem;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success-color);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--error-color);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .rewards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .rewards-header,
+        .points-summary,
+        .reward-card,
+        .history-section {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-recycle"></i>
+                TrashRecycle
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-trash"></i> My Waste</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pickup-request.html"><i class="fas fa-truck"></i> Pickup Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="fas fa-gift"></i> Rewards</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <button class="btn btn-link text-light dropdown-toggle" type="button" id="notificationsDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge bg-danger">3</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><h6 class="dropdown-header">Notifications</h6></li>
+                            <li><a class="dropdown-item" href="#">New pickup request accepted</a></li>
+                            <li><a class="dropdown-item" href="#">Reward points updated</a></li>
+                            <li><a class="dropdown-item" href="#">New recycling tip available</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown ms-3">
+                        <button class="btn btn-link text-light dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                            <img src="https://via.placeholder.com/32" class="rounded-circle me-2" alt="Profile">
+                            <span>John Doe</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                            <li><a class="dropdown-item" href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="rewards-header">
+            <h1>Rewards Center</h1>
+            <p>Redeem your recycling points for exciting rewards</p>
+        </div>
+
+        <div class="points-summary">
+            <div class="points-value">2,500</div>
+            <div class="points-label">Total Points</div>
+            <div class="points-progress">
+                <div class="points-progress-bar" style="width: 75%"></div>
+            </div>
+            <div class="next-level">750 points until next level</div>
+        </div>
+
+        <div class="rewards-grid">
+            <div class="reward-card">
+                <img src="https://via.placeholder.com/400x200" alt="Eco-friendly Water Bottle" class="reward-image">
+                <div class="reward-content">
+                    <h3 class="reward-title">Eco-friendly Water Bottle</h3>
+                    <p class="reward-description">Stainless steel water bottle, perfect for reducing plastic waste</p>
+                    <div class="reward-points">
+                        <i class="fas fa-star"></i>
+                        <span>500 points</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="redeemReward(1, 500)">Redeem</button>
+                </div>
+            </div>
+
+            <div class="reward-card">
+                <img src="https://via.placeholder.com/400x200" alt="Reusable Shopping Bag" class="reward-image">
+                <div class="reward-content">
+                    <h3 class="reward-title">Reusable Shopping Bag</h3>
+                    <p class="reward-description">Durable cotton shopping bag for sustainable grocery shopping</p>
+                    <div class="reward-points">
+                        <i class="fas fa-star"></i>
+                        <span>300 points</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="redeemReward(2, 300)">Redeem</button>
+                </div>
+            </div>
+
+            <div class="reward-card">
+                <img src="https://via.placeholder.com/400x200" alt="Compost Bin" class="reward-image">
+                <div class="reward-content">
+                    <h3 class="reward-title">Compost Bin</h3>
+                    <p class="reward-description">Compact compost bin for kitchen waste management</p>
+                    <div class="reward-points">
+                        <i class="fas fa-star"></i>
+                        <span>1000 points</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="redeemReward(3, 1000)">Redeem</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="history-section">
+            <div class="section-header">
+                <h2>Reward History</h2>
+            </div>
+            <ul class="history-list">
+                <li class="history-item">
+                    <div class="history-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <div class="history-content">
+                        <h4>Eco-friendly Water Bottle</h4>
+                        <p>Redeemed on March 15, 2024</p>
+                    </div>
+                    <div class="history-points">-500 points</div>
+                </li>
+                <li class="history-item">
+                    <div class="history-icon">
+                        <i class="fas fa-recycle"></i>
+                    </div>
+                    <div class="history-content">
+                        <h4>Recycling Bonus</h4>
+                        <p>Completed 10 recycling pickups</p>
+                    </div>
+                    <div class="history-points">+250 points</div>
+                </li>
+                <li class="history-item">
+                    <div class="history-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <div class="history-content">
+                        <h4>Reusable Shopping Bag</h4>
+                        <p>Redeemed on February 28, 2024</p>
+                    </div>
+                    <div class="history-points">-300 points</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            document.getElementById('toastContainer').appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Handle reward redemption
+        async function redeemReward(rewardId, points) {
+            const currentPoints = 2500; // This would come from the backend
+            
+            if (currentPoints < points) {
+                showToast('Not enough points to redeem this reward', 'error');
+                return;
+            }
+
+            try {
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                showToast('Reward redeemed successfully!');
+                
+                // Update points display
+                const newPoints = currentPoints - points;
+                document.querySelector('.points-value').textContent = newPoints;
+                
+                // Disable the redeemed reward button
+                const button = event.target;
+                button.disabled = true;
+                button.textContent = 'Redeemed';
+                
+                // Add to history
+                const historyList = document.querySelector('.history-list');
+                const historyItem = document.createElement('li');
+                historyItem.className = 'history-item';
+                historyItem.innerHTML = `
+                    <div class="history-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <div class="history-content">
+                        <h4>${button.parentElement.querySelector('.reward-title').textContent}</h4>
+                        <p>Redeemed on ${new Date().toLocaleDateString()}</p>
+                    </div>
+                    <div class="history-points">-${points} points</div>
+                `;
+                historyList.insertBefore(historyItem, historyList.firstChild);
+            } catch (error) {
+                showToast('Failed to redeem reward', 'error');
+            }
+        }
+    </script>
+</body>
+</html>

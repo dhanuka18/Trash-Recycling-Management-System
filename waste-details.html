@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Waste Details - Trash Recycling Management System">
+    <title>Waste Details - Trash Recycling Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --success-color: #2ecc71;
+            --error-color: #e74c3c;
+            --warning-color: #f1c40f;
+            --text-color: #2c3e50;
+            --light-gray: #ecf0f1;
+            --border-color: #bdc3c7;
+            --shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f6fa 0%, #e8eaf6 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .details-header {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .waste-icon-large {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-color);
+            font-size: 2rem;
+        }
+
+        .header-content h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .header-content p {
+            margin: 0.5rem 0 0;
+            color: var(--secondary-color);
+            opacity: 0.8;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 992px) {
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .details-section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--light-gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        .guidelines-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .guideline-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .guideline-item:last-child {
+            border-bottom: none;
+        }
+
+        .guideline-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--success-color);
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .guideline-content h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .guideline-content p {
+            margin: 0.5rem 0 0;
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+
+        .impact-section {
+            margin-top: 2rem;
+        }
+
+        .impact-card {
+            background: var(--light-gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .impact-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .impact-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .impact-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+
+        .impact-content h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .impact-content p {
+            margin: 0.5rem 0 0;
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--light-gray);
+            color: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+            transform: translateY(-2px);
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .history-table th {
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 2px solid var(--light-gray);
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        .history-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .history-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-completed {
+            background: rgba(46, 204, 113, 0.1);
+            color: var(--success-color);
+        }
+
+        .status-pending {
+            background: rgba(241, 196, 15, 0.1);
+            color: var(--warning-color);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .details-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .history-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .details-header,
+        .details-section {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-recycle"></i>
+                TrashRecycle
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="my-waste.html"><i class="fas fa-trash"></i> My Waste</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pickup-request.html"><i class="fas fa-truck"></i> Pickup Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="rewards.html"><i class="fas fa-gift"></i> Rewards</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <button class="btn btn-link text-light dropdown-toggle" type="button" id="notificationsDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge bg-danger">3</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><h6 class="dropdown-header">Notifications</h6></li>
+                            <li><a class="dropdown-item" href="#">New pickup request accepted</a></li>
+                            <li><a class="dropdown-item" href="#">Reward points updated</a></li>
+                            <li><a class="dropdown-item" href="#">New recycling tip available</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown ms-3">
+                        <button class="btn btn-link text-light dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                            <img src="https://via.placeholder.com/32" class="rounded-circle me-2" alt="Profile">
+                            <span>John Doe</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                            <li><a class="dropdown-item" href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="details-header">
+            <div class="waste-icon-large">
+                <i class="fas fa-recycle"></i>
+            </div>
+            <div class="header-content">
+                <h1>Recyclables</h1>
+                <p>Paper, Plastic, Glass, and Metal Waste</p>
+            </div>
+        </div>
+
+        <div class="details-grid">
+            <div class="details-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">5.2 kg</div>
+                        <div class="stat-label">Current Weight</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">45</div>
+                        <div class="stat-label">Total Pickups</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">250 kg</div>
+                        <div class="stat-label">Total Recycled</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">1.2 t</div>
+                        <div class="stat-label">CO₂ Saved</div>
+                    </div>
+                </div>
+
+                <div class="section-header">
+                    <h2>Recycling Guidelines</h2>
+                </div>
+                <ul class="guidelines-list">
+                    <li class="guideline-item">
+                        <div class="guideline-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="guideline-content">
+                            <h3>Clean Before Recycling</h3>
+                            <p>Rinse containers and remove food residue to prevent contamination.</p>
+                        </div>
+                    </li>
+                    <li class="guideline-item">
+                        <div class="guideline-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="guideline-content">
+                            <h3>Remove Labels</h3>
+                            <p>Take off paper labels and remove caps from bottles.</p>
+                        </div>
+                    </li>
+                    <li class="guideline-item">
+                        <div class="guideline-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="guideline-content">
+                            <h3>Flatten Containers</h3>
+                            <p>Flatten boxes and crush cans to save space.</p>
+                        </div>
+                    </li>
+                    <li class="guideline-item">
+                        <div class="guideline-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="guideline-content">
+                            <h3>Check Local Rules</h3>
+                            <p>Verify which materials are accepted in your area.</p>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="section-header" style="margin-top: 2rem;">
+                    <h2>Pickup History</h2>
+                </div>
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Weight</th>
+                            <th>Points</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mar 15, 2024</td>
+                            <td>5.2 kg</td>
+                            <td>+50</td>
+                            <td><span class="status-badge status-completed">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>Mar 8, 2024</td>
+                            <td>4.8 kg</td>
+                            <td>+45</td>
+                            <td><span class="status-badge status-completed">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>Mar 1, 2024</td>
+                            <td>6.0 kg</td>
+                            <td>+60</td>
+                            <td><span class="status-badge status-completed">Completed</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="details-section">
+                <div class="section-header">
+                    <h2>Environmental Impact</h2>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-header">
+                        <div class="impact-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div class="impact-content">
+                            <h3>Carbon Reduction</h3>
+                            <p>Recycling paper saves 17 trees and reduces CO₂ emissions by 1.5 tons per ton of paper.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-header">
+                        <div class="impact-icon">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <div class="impact-content">
+                            <h3>Water Conservation</h3>
+                            <p>Recycling one ton of paper saves 7,000 gallons of water.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-header">
+                        <div class="impact-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="impact-content">
+                            <h3>Energy Savings</h3>
+                            <p>Recycling aluminum saves 95% of the energy needed to make new aluminum.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-header" style="margin-top: 2rem;">
+                    <h2>Quick Actions</h2>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <a href="pickup-request.html" class="btn btn-primary">Schedule Pickup</a>
+                    <a href="my-waste.html" class="btn btn-secondary">Back to My Waste</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
