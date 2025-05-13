@@ -36,9 +36,6 @@ This system allows users to report trash pickup requests, track waste types, vie
 - View recycling schedules
 - Get location-based notifications
 
-## Installation Instructions
 
-1. Clone the repository:
 
-   ```bash
-   git clone https://github.com/your-username/trash-recycling-management-system.git
+
